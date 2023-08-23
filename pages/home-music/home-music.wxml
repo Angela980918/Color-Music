@@ -1,0 +1,3 @@
+<!--pages/home-music/home-music.wxml-->
+<van-button type="primary">引入vantUI成功</van-button>
+
