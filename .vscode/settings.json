@@ -1,0 +1,10 @@
+{
+  "files.associations": {
+    "*.cjson": "jsonc",
+    "*.wxss": "css",
+    "*.wxs": "javascript",
+    "mainfest.json": "jsonc",
+    "pages.json": "jsonc",
+    "*.wxml": "html"
+  }
+}

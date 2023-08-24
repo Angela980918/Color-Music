@@ -5,5 +5,18 @@
     "compileHotReLoad": true,
     "urlCheck": false
   },
-  "libVersion": "2.33.0"
+  "libVersion": "2.33.0",
+  "condition": {
+    "miniprogram": {
+      "list": [
+        {
+          "name": "我的视频",
+          "pathName": "pages/home-video/home-video",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        }
+      ]
+    }
+  }
 }
