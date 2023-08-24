@@ -1,0 +1,17 @@
+<view class="video-item-v1">
+  <!-- 封面 -->
+  <view class="album">
+    <!-- 图片 -->
+    <image class="image" src="{{ itemData.cover }}" />
+
+    <!-- 播放相关信息 -->
+    <view class="info">
+      <!-- 播放热度 -->
+      <view class="count">{{ itemData.playCount }}</view>
+      <!-- 播放时长 -->
+      <view class="duration">{{ itemData.score }}</view>
+    </view>
+  </view>
+  <!-- 曲名-作者 -->
+  <view class="content">{{ itemData.name }} - {{ itemData.artistName }}</view>
+</view>

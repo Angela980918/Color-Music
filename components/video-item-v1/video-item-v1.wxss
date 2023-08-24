@@ -1,0 +1,17 @@
+/* components/video-item-v1/video-item-v1.wxss */
+.video-item-v1{
+  width: 100%;
+  margin-bottom: 30rpx;
+}
+
+.video-item-v1 .album{
+  position: relative;
+  width: 100%;
+  height: 100px;
+}
+
+.album .image{
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+}
