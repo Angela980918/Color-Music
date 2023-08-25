@@ -1,3 +1,6 @@
+<!-- 引入wxs工具模块 module取模块名称 -->
+<wxs module="format" src="../../utils/format.wxs" />
+
 <view class="video-item-v1">
   <!-- 封面 -->
   <view class="album">
@@ -7,9 +10,11 @@
     <!-- 播放相关信息 -->
     <view class="info">
       <!-- 播放热度 -->
-      <view class="count">{{ itemData.playCount }}</view>
+      <view class="count">{{
+        format.formatPlayCount(itemData.playCount)
+      }}</view>
       <!-- 播放时长 -->
-      <view class="duration">{{ itemData.score }}</view>
+      <view class="duration">{{ format.formatDuration(itemData.score) }}</view>
     </view>
   </view>
   <!-- 曲名-作者 -->
