@@ -1,6 +1,5 @@
 <view class="home-video">
   <view class="item" wx:for="{{videoList}}" wx:key="id">
-    <video-item-v1 itemData="{{item}}">
-    </video-item-v1>
-  </view>>
+    <video-item-v1 itemData="{{item}}" />
+  </view>
 </view>
