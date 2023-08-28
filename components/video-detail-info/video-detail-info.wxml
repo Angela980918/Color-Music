@@ -1,0 +1,9 @@
+<!--components/video-detail-info/video-detail-info.wxml-->
+<view class="info">
+  <view class="album">
+    <image
+      src="{{detailInfo.cover}}"
+      mode="scaleToFill"
+    />
+  </view>
+</view>
