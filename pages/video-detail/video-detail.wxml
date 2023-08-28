@@ -1,0 +1,12 @@
+<!--pages/video-detail/video-detail.wxml-->
+<!-- 视频播放组件 -->
+<video 
+  class="video" 
+  src="{{ mvUrl }}" 
+  autoplay 
+  danmu-list="{{ danmuList }}"
+/>
+
+<view class="content">
+  v
+</view>
