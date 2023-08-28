@@ -15,6 +15,13 @@
           "query": "",
           "launchMode": "default",
           "scene": null
+        },
+        {
+          "name": "视频详情",
+          "pathName": "pages/video-detail/video-detail",
+          "query": "id=14636451",
+          "launchMode": "default",
+          "scene": null
         }
       ]
     }
