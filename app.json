@@ -4,7 +4,8 @@
   },
   "pages": [
     "pages/home-music/home-music",
-    "pages/home-video/home-video"
+    "pages/home-video/home-video",
+    "pages/video-detail/video-detail"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -16,17 +17,17 @@
   "tabBar": {
     "list": [
       {
-      "pagePath": "pages/home-music/home-music",
-      "text": "音乐",
-      "iconPath": "assets/images/tabbar/music_normal.png",
-      "selectedIconPath": "assets/images/tabbar/music_active.png"
-    },
-    {
-      "pagePath": "pages/home-video/home-video",
-      "text": "视频",
-      "iconPath": "assets/images/tabbar/video_normal.png",
-      "selectedIconPath": "assets/images/tabbar/video_active.png"
-    }
-  ]
+        "pagePath": "pages/home-music/home-music",
+        "text": "音乐",
+        "iconPath": "assets/images/tabbar/music_normal.png",
+        "selectedIconPath": "assets/images/tabbar/music_active.png"
+      },
+      {
+        "pagePath": "pages/home-video/home-video",
+        "text": "视频",
+        "iconPath": "assets/images/tabbar/video_normal.png",
+        "selectedIconPath": "assets/images/tabbar/video_active.png"
+      }
+    ]
   }
 }
