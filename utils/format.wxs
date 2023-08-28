@@ -1,7 +1,7 @@
 // 播放时长转换计算
 function formatDuration(duration) {
   // 毫秒数转换为秒数
-  console.log("duration",duration);
+  // console.log("duration",duration);
   var duractionSec = duration / 1000;
   var min = Math.floor(duractionSec / 60);
   var sec = Math.floor(duractionSec % 60);
