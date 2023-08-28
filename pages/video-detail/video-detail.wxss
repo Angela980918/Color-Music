@@ -1,0 +1,9 @@
+/* pages/video-detail/video-detail.wxss */
+page{
+  height: 100vh;
+}
+
+.video{
+  width: 100%;
+  
+}
