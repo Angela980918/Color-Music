@@ -7,9 +7,6 @@ Component({
     detailInfo: {
       type: Object,
       value: {},
-      observer: function(newVal, oldVal) {
-        console.log('myProperty changed:', newVal,oldVal);
-      }
     },
   },
 
