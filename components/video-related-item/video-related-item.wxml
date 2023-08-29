@@ -1,0 +1,15 @@
+<!--components/video-related-item/video-related-item.wxml-->
+<wxs src="../../utils/format.wxs" module="format"></wxs>
+
+<view class="related-item">
+  <view class="pic">
+    <image src="{{ relatedData.coverUrl }}" mode="scaleToFill" />
+    <view class="count">{{
+      format.formatPlayCount(relatedData.playTime)
+    }}</view>
+  </view>
+  <view class="info">
+    <view class="title">{{ relatedData.title }}</view>
+    <view class="author">{{ relatedData.creator[0].userName }}</view>
+  </view>
+</view>
