@@ -1,27 +1,28 @@
 <!--pages/home-music/home-music.wxml-->
+<view class="app">
+  <!-- 搜索框 -->
+  <van-search
+    value="{{ searchValue }}"
+    background="#fafafa"
+    placeholder="请输入搜索关键词"
+    input-align="center"
+    bind:click-input="onSearchClick"
+  />
 
-<!-- 搜索框 -->
-<van-search
-  value="{{ searchValue }}"
-  background="#fafafa"
-  placeholder="请输入搜索关键词"
-  input-align="center"
-  bind:click-input="onSearchClick"
-/>
-
-<!-- 轮播图 -->
-<swiper
-  class="banner"
-  indicator-dots="true"
-  indicator-color="rgba(200,200,200,.5)"
-  indicator-active-color="rgba(255,255,255,.9)"
-  autoplay="true"
-  duration="1500"
-  circular
->
-  <block wx:for="{{ bannerImg }}" wx:key="id">
-    <!-- <swiper-item class="item">
+  <!-- 轮播图 -->
+  <swiper
+    class="banner"
+    indicator-dots="true"
+    indicator-color="rgba(200,200,200,.5)"
+    indicator-active-color="rgba(255,255,255,.9)"
+    autoplay="true"
+    duration="1500"
+    circular
+  >
+    <block wx:for="{{ bannerImg }}" wx:key="id">
+      <swiper-item class="item">
       <image class="img" src="{{ item.pic }}" mode="scaleToFill" />
-    </swiper-item> -->
-  </block>
-</swiper>
+    </swiper-item>
+    </block>
+  </swiper>
+</view>
