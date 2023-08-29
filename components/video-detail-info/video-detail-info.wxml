@@ -1,9 +1,12 @@
-<!--components/video-detail-info/video-detail-info.wxml-->
-<view class="info">
-  <view class="album">
-    <image
-      src="{{detailInfo.cover}}"
-      mode="scaleToFill"
-    />
+<wxs src="../../utils/format.wxs" module="format" />
+
+<view class="detail-info">
+  <view class="title">{{ detailInfo.name }}</view>
+  <view class="author">{{ detailInfo.artistName }}</view>
+  <view class="info">
+    <view class="count"
+      >{{ format.formatPlayCount(detailInfo.playCount) }}次播放 -
+    </view>
+    <view class="date">{{ detailInfo.publishTime }}</view>
   </view>
 </view>
