@@ -1,1 +1,27 @@
 /* pages/home-music/home-music.wxss */
+
+page{
+  padding:0 20rpx; 
+  background-color: #fafafa;
+}
+
+.banner{
+  margin: 0 auto;
+  border-radius: 3px;
+  background-color: aqua;
+  /* overflow: hidden; */
+  /* transform: translateY(0); */
+}
+
+.banner .item{
+  /* display: flex; */
+  border-radius: 3px;
+  background-color: blue;
+}
+
+.banner .item .img{
+  width: 100%;
+  height: 100%;
+  background-color: red;
+  border-radius: 3px;
+}
