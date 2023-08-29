@@ -13,7 +13,7 @@ Page({
       { text: "嘿嘿嘿, 好喜欢", color: "#0000ff", time: 15 },
     ],
     mvInfo: {}, // MV详情
-    mvRelated: {}, // MV相关推荐
+    mvRelated: [] // MV相关推荐
   },
 
   /**
@@ -29,6 +29,8 @@ Page({
     this.fetchMVUrl(id);
     this.fetchMVInfo(id);
     this.fetchMVRelated(id);
+
+    console.log("length:",this.data.mvRelated.length);
   },
 
   // 封装页面请求MV详情数据
