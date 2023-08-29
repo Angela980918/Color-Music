@@ -1,11 +1,11 @@
 <view class="home-video">
   <view class="item" wx:for="{{ videoList }}" wx:key="id">
-    <video-item-v1 
-    bindtap="onVideoItemClick" 
-    itemData="{{ item }}"
-    data-item="{{ item }}"
-   />
+    <video-item-v1
+      bindtap="onVideoItemClick"
+      itemData="{{ item }}"
+      data-item="{{ item }}"
+    />
   </view>
-  
+
   <van-toast id="van-toast" />
 </view>
