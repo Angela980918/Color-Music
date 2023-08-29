@@ -5,5 +5,17 @@ page{
 
 .video{
   width: 100%;
-  
+}
+
+.content {
+  height: calc(100% - 225px);
+}
+
+.content .video-list{
+  width: 100%;
+  margin-top: 30px;
+}
+
+.content .video-list .related-list{
+  width: 100%;
 }
