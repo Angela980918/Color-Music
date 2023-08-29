@@ -1,16 +1,18 @@
 /* pages/home-music/home-music.wxss */
 
-page{
+.app{
   padding:0 20rpx; 
-  background-color: #fafafa;
 }
 
 .banner{
-  margin: 0 auto;
+  width: 100%;  
   border-radius: 3px;
   background-color: aqua;
   /* overflow: hidden; */
   /* transform: translateY(0); */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .banner .item{
