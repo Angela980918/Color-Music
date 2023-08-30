@@ -1,5 +1,10 @@
 // pages/home-music/home-music.js
 import { getMusicBanner } from "../../service/api_music";
+import { queryRect } from "../../utils/query-rect";
+import { throttle } from "../../utils/throttle";
+// 防抖节流
+const queryRectThrottle = throttle(queryRect);
+
 Page({
   /**
    * 页面的初始数据
@@ -7,11 +12,11 @@ Page({
   data: {
     searchValue: "", // 查询关键字
     bannerImg: [], // 轮播图
+    bannerHeight: 0,
   },
 
   // 搜索框事件监听
   onSearchClick() {
-    console.log("点击了搜索框");
     wx.navigateTo({
       url: "/pages/search-detail/search-detail",
     });
@@ -20,9 +25,19 @@ Page({
   // 获取banner数据
   async fetchBannerData() {
     const res = await getMusicBanner();
-    // console.log("banner:", "res");
     this.setData({
       bannerImg: res.banners,
+    });
+  },
+
+  // 动态适配机型，设置轮播图高度
+  onBannerImageLoaded(event) {
+    // 获取img的高度
+    queryRectThrottle(".img").then((res) => {
+      console.log(res);
+      this.setData({
+        bannerHeight: res[0].height + "px",
+      });
     });
   },
 
