@@ -1,2 +1,18 @@
 <!--components/area-header/area-header.wxml-->
-<text>components/area-header/area-header.wxml</text>
+<view class="area-header">
+  <viwe class="title">{{ title }}</viwe>
+  <view class="right" wx:if="{{ showRight }}" bindtap="onRightClick">
+    <view class="slot">
+      <!-- 插槽 -->
+      <slot></slot>
+    </view>
+    <view class="default">
+      <text class="text">{{ rightText }}</text>
+      <image
+        class="icon"
+        src="../../assets/images/icons/arrow-right.png"
+        mode="scaleToFill"
+      />
+    </view>
+  </view>
+</view>

@@ -1,1 +1,34 @@
 /* components/area-header/area-header.wxss */
+.area-header{
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  margin: 25rpx 0;
+}
+
+.title{
+  font-size: 35rpx;
+  font-weight: 700;
+  color: #333;
+}
+
+/* 默认插槽内容不显示 */
+.slot{
+  display: none;
+  align-items: center;
+}
+
+.default{
+  display: flex;
+  align-items: center;
+}
+
+.text{
+  font-size: 28rpx;
+  color:#777;
+}
+
+.icon{
+  width: 45rpx;
+  height: 45rpx;
+}
