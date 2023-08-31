@@ -31,7 +31,12 @@
   </block>
 </swiper>
 
-<!--  -->
+<!-- 推荐歌曲 -->
 <view>
-  <area-header></area-header>
+  <area-header title="推荐歌曲" bind:rightclick="onRecommendClick" />
+  <block wx:for="{{ 6 }}" wx:key="*this">
+    <view class="item">
+      <view>{{ item }}</view>
+    </view>
+  </block>
 </view>

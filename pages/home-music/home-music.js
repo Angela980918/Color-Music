@@ -1,5 +1,5 @@
 // pages/home-music/home-music.js
-import { getMusicBanner } from "../../service/api_music";
+import { getMusicBanner, getMusicMenuDetail } from "../../service/api_music";
 import { queryRect } from "../../utils/query-rect";
 import { throttle } from "../../utils/throttle";
 // 防抖节流
@@ -30,6 +30,14 @@ Page({
     });
   },
 
+  // 获取歌单详情数据
+  async fetchMusicMenuDetailData() {
+    const res = await getMusicMenuDetail();
+    this.setData({
+
+    })
+  },
+
   // 动态适配机型，设置轮播图高度
   onBannerImageLoaded(event) {
     // 获取img的高度
@@ -39,6 +47,10 @@ Page({
         bannerHeight: res[0].height + "px",
       });
     });
+  },
+  // 推荐歌曲事件监听
+  onRecommendClick() {
+    console.log("onRecommendClick");
   },
 
   /**
