@@ -12,7 +12,8 @@ Page({
   data: {
     searchValue: "", // 查询关键字
     bannerImg: [], // 轮播图
-    bannerHeight: 0,
+    bannerHeight: 0, // 轮播图高度
+    recommendSongList: [], // 推荐歌曲列表
   },
 
   // 搜索框事件监听
@@ -32,9 +33,12 @@ Page({
 
   // 获取歌单详情数据
   async fetchMusicMenuDetailData() {
-    const res = await getMusicMenuDetail();
+    const res = await getMusicMenuDetail(3778678);
+    console.log(res);
+    const playList = res.playlist;
+    const TempSongList = playList.tracks.slice(0, 6);
     this.setData({
-
+      recommendSongList: TempSongList,
     })
   },
 
@@ -51,6 +55,9 @@ Page({
   // 推荐歌曲事件监听
   onRecommendClick() {
     console.log("onRecommendClick");
+    wx.navigateTo({
+      url: '/pages/songs-detail/songs-detail',
+    })
   },
 
   /**
@@ -58,6 +65,7 @@ Page({
    */
   onLoad(options) {
     this.fetchBannerData();
+    this.fetchMusicMenuDetailData();
   },
 
   /**
