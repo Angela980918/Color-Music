@@ -8,7 +8,8 @@
     "pages/home-music/home-music",
     "pages/home-video/home-video",
     "pages/video-detail/video-detail",
-    "pages/search-detail/search-detail"
+    "pages/search-detail/search-detail",
+    "pages/songs-detail/songs-detail"
   ],
   "window": {
     "backgroundTextStyle": "light",
