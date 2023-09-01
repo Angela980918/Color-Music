@@ -1,0 +1,21 @@
+<!--components/song-item-v1/song-item-v1.wxml-->
+<view class="song-item" >
+  <view class="left">
+    <view class="pic">
+      <image class="img" src="{{ songItem.al.picUrl }}" mode="scaleToFill" />
+    </view>
+  </view>
+
+  <view class="center">
+    <view class="info">
+      <view class="name">{{ songItem.name }}</view>
+      <view class="source">
+        {{ songItem.ar[0].name }} · {{ songItem.al.name }}
+      </view>
+    </view>
+  </view>
+
+  <view class="right">
+    <van-icon name="arrow" />
+  </view>
+</view>
