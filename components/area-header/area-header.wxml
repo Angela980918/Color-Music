@@ -8,11 +8,12 @@
     </view>
     <view class="default">
       <text class="text">{{ rightText }}</text>
-      <image
+      <!-- <image
         class="icon"
         src="../../assets/images/icons/arrow-right.png"
         mode="scaleToFill"
-      />
+      /> -->
+      <van-icon name="arrow" color="#777"/>
     </view>
   </view>
 </view>
