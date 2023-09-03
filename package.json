@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/Angela980918/Color-Music#readme",
   "dependencies": {
-    "@vant/weapp": "^1.10.23"
+    "@vant/weapp": "^1.10.23",
+    "hy-event-store": "^1.3.1"
   }
 }
