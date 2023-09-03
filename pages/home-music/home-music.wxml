@@ -1,5 +1,5 @@
 <!--pages/home-music/home-music.wxml-->
-<!-- 搜索框 -->
+<!-- 1.搜索框 -->
 <van-search
   value="{{ searchValue }}"
   background="#fafafa"
@@ -8,7 +8,7 @@
   bind:click-input="onSearchClick"
 />
 
-<!-- 轮播图 -->
+<!-- 2.轮播图 -->
 <swiper
   class="banner"
   indicator-dots="true"
@@ -31,12 +31,22 @@
   </block>
 </swiper>
 
-<!-- 推荐歌曲 -->
-<view>
+<!-- 3.推荐歌曲 -->
+<!-- <view>
   <area-header title="推荐歌曲" bind:rightclick="onRecommendClick" />
   <block wx:for="{{ recommendSongList }}" wx:key="id">
     <view class="item">
       <song-item-v1 songItem="{{ item }}"></song-item-v1>
     </view>
   </block>
+</view> -->
+
+<!-- 4.热门歌单/推荐歌单 -->
+<view class="menu-list">
+  <area-header title="热门歌单" />
+  <scroll-view scroll-x enable-flex class="list">
+    <block wx:for="{{ hotSongMenus }}" wx:key="id">
+      <song-menu-item class="item" menuItem="{{ item }}" />
+    </block>
+  </scroll-view>
 </view>

@@ -1,7 +1,8 @@
 // pages/home-music/home-music.js
-import { getMusicBanner, getMusicMenuDetail } from "../../service/api_music";
+import { getMusicBanner, getMusicMenuDetail, getMusicMenu } from "../../service/api_music";
 import { queryRect } from "../../utils/query-rect";
 import { throttle } from "../../utils/throttle";
+import rankingStore from "../../store/rankingStore";
 // 防抖节流
 const queryRectThrottle = throttle(queryRect);
 
@@ -14,6 +15,7 @@ Page({
     bannerImg: [], // 轮播图
     bannerHeight: 0, // 轮播图高度
     recommendSongList: [], // 推荐歌曲列表
+    hotSongMenus: [] // 热门歌单列表
   },
 
   // 搜索框事件监听
@@ -32,13 +34,22 @@ Page({
   },
 
   // 获取歌单详情数据
-  async fetchMusicMenuDetailData() {
-    const res = await getMusicMenuDetail(3778678);
-    console.log(res);
-    const playList = res.playlist;
-    const TempSongList = playList.tracks.slice(0, 6);
+  // async fetchMusicMenuDetailData() {
+  //   const res = await getMusicMenuDetail(3778678);
+  //   console.log(res);
+  //   const playList = res.playlist;
+  //   const TempSongList = playList.tracks.slice(0, 6);
+  //   this.setData({
+  //     recommendSongList: TempSongList,
+  //   });
+  // },
+
+  // 获取热门歌单列表数据
+  async fetchHotSongMenuListData() {
+    const res = await getMusicMenu();
+    // console.log("getMusicMenu",res);
     this.setData({
-      recommendSongList: TempSongList,
+      hotSongMenus: res.playlists
     })
   },
 
@@ -46,7 +57,7 @@ Page({
   onBannerImageLoaded(event) {
     // 获取img的高度
     queryRectThrottle(".img").then((res) => {
-      console.log(res);
+      // console.log(res);
       this.setData({
         bannerHeight: res[0].height + "px",
       });
@@ -56,8 +67,8 @@ Page({
   onRecommendClick() {
     console.log("onRecommendClick");
     wx.navigateTo({
-      url: '/pages/songs-detail/songs-detail',
-    })
+      url: "/pages/songs-detail/songs-detail",
+    });
   },
 
   /**
@@ -65,7 +76,18 @@ Page({
    */
   onLoad(options) {
     this.fetchBannerData();
-    this.fetchMusicMenuDetailData();
+    this.fetchHotSongMenuListData();
+    // this.fetchMusicMenuDetailData();
+
+    // Store发起数据请求
+    rankingStore.onState("rankingList", (value) => {
+      // 监听Store中的rankingList
+      // console.log("rankingList", value);
+      this.setData({
+        recommendSongList: value.slice(0, 6),
+      });
+    });
+    rankingStore.dispatch("fetchRecommendMusicAction");
   },
 
   /**

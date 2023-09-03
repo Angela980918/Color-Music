@@ -5,6 +5,7 @@ page{
   --search-padding: 10px 0;
 }
 
+/* 轮播图样式 */
 .banner{
   border-radius: 3px;
   overflow: hidden;
@@ -17,4 +18,14 @@ page{
 .banner .item .img{
   width: 100%;
   border-radius: 3px;
+}
+
+/* 歌单列表样式 */
+.list{
+  display: flex;
+}
+.list .item{
+  flex-shrink: 0;
+  width: 220rpx;
+  margin-right: 20rpx;
 }
