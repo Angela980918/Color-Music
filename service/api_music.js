@@ -27,3 +27,21 @@ export function getMusicMenuDetail(id) {
     },
   });
 }
+
+/**
+ * 获取歌单列表
+ * @param {*} cat 歌单类型
+ * @param {*} limit 歌单数量
+ * @param {*} offset 偏移量
+ * @returns
+ */
+export function getMusicMenu(cat = "全部", limit = 6, offset = 0) {
+  return MusicRequest.get({
+    url: "/top/playlist",
+    data: {
+      cat,
+      limit,
+      offset,
+    },
+  });
+}
