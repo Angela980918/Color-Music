@@ -1,7 +1,9 @@
 /* components/song-menu-item/song-menu-item.wxss */
 .menu-item{
   display: inline-block;
-  width: 100%;
+  width: 200rpx;
+  height: 285rpx;
+  border-radius: 4px;
 }
 
 .pic{
@@ -9,7 +11,7 @@
 }
 
 .pic .img{
-  width: 100%;
+  width: 200rpx;
   border-radius: 12rpx;
   background-size: cover;
 }
@@ -34,4 +36,5 @@
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
+  white-space: pre-wrap;
 }
