@@ -1,0 +1,14 @@
+<!--components/song-menu-area/song-menu-area.wxml-->
+<area-header title="{{ menuTitle }}" bind:rightclick="OnMenuMoreClick"/>
+<scroll-view
+  class="menu-list"
+  scroll-x
+  enable-flex
+  style="width: {{ screenWidth }}px;"
+>
+  <block wx:for="{{ songMenuList }}" wx:key="id">
+    <view class="menu-item">
+      <song-menu-item menuItem="{{ item }}" />
+    </view>
+  </block>
+</scroll-view>
