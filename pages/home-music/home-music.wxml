@@ -42,11 +42,5 @@
 </view> -->
 
 <!-- 4.热门歌单/推荐歌单 -->
-<view class="menu-list">
-  <area-header title="热门歌单" />
-  <scroll-view scroll-x enable-flex class="list">
-    <block wx:for="{{ hotSongMenus }}" wx:key="id">
-      <song-menu-item class="item" menuItem="{{ item }}" />
-    </block>
-  </scroll-view>
-</view>
+<song-menu-area menuTitle="热门歌单" wx:if="{{ hotSongMenus.length > 0 }}" songMenuList="{{ hotSongMenus }}"/>
+<song-menu-area menuTitle="推荐歌单" wx:if="{{ recSongMenus.length > 0 }}" songMenuList="{{ recSongMenus }}"/>

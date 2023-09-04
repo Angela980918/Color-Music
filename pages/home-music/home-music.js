@@ -1,5 +1,9 @@
 // pages/home-music/home-music.js
-import { getMusicBanner, getMusicMenuDetail, getMusicMenu } from "../../service/api_music";
+import {
+  getMusicBanner,
+  getMusicMenuDetail,
+  getMusicMenu,
+} from "../../service/api_music";
 import { queryRect } from "../../utils/query-rect";
 import { throttle } from "../../utils/throttle";
 import rankingStore from "../../store/rankingStore";
@@ -15,7 +19,10 @@ Page({
     bannerImg: [], // 轮播图
     bannerHeight: 0, // 轮播图高度
     recommendSongList: [], // 推荐歌曲列表
-    hotSongMenus: [] // 热门歌单列表
+
+    // 歌单
+    hotSongMenus: [], // 热门歌单列表
+    recSongMenus: [], // 推荐歌单列表
   },
 
   // 搜索框事件监听
@@ -44,13 +51,20 @@ Page({
   //   });
   // },
 
-  // 获取热门歌单列表数据
+  // 获取热门歌单列表数据--"全部"
   async fetchHotSongMenuListData() {
     const res = await getMusicMenu();
-    // console.log("getMusicMenu",res);
     this.setData({
-      hotSongMenus: res.playlists
-    })
+      hotSongMenus: res.playlists,
+    });
+  },
+
+  // 获取推荐歌单列表数据--"欧美"
+  async fetchResSongMenuListData() {
+    const res = await getMusicMenu("欧美");
+    this.setData({
+      recSongMenus: res.playlists,
+    });
   },
 
   // 动态适配机型，设置轮播图高度
@@ -77,6 +91,7 @@ Page({
   onLoad(options) {
     this.fetchBannerData();
     this.fetchHotSongMenuListData();
+    this.fetchResSongMenuListData();
     // this.fetchMusicMenuDetailData();
 
     // Store发起数据请求
