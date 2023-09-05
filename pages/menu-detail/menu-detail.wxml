@@ -1,0 +1,15 @@
+<!--pages/menu-detail/menu-detail.wxml-->
+<view class="all-menu">
+  <block wx:for="{{ musicMenu }}" wx:key="cat">
+    <view class="cat">
+      <area-header title="{{ item.cat }}" showRight="{{ fasle }}" />
+      <view class="list">
+        <block wx:for="{{ item.playlists }}" wx:for-item="playlist" wx:key="id">
+          <view class="list-item">
+            <song-menu-item menuItem="{{ playlist }}" />
+          </view>
+        </block>
+      </view>
+    </view>
+  </block>
+</view>

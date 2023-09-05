@@ -1,0 +1,15 @@
+/* pages/menu-detail/menu-detail.wxss */
+page{
+  box-sizing: border-box;
+  padding: 0 20rpx;
+}
+
+.list {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.list-item {
+  width: 49%;
+}
