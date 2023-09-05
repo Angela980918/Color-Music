@@ -1,8 +1,7 @@
 /* components/song-menu-item/song-menu-item.wxss */
 .menu-item{
   display: inline-block;
-  width: 200rpx;
-  height: 285rpx;
+  width: 100%;
   border-radius: 4px;
 }
 
@@ -11,7 +10,7 @@
 }
 
 .pic .img{
-  width: 200rpx;
+  width: 100%;
   border-radius: 12rpx;
   background-size: cover;
 }

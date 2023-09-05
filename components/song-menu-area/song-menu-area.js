@@ -29,7 +29,10 @@ Component({
   methods: {
     // 点击更多
     OnMenuMoreClick(){
-      console.log("OnMenuMoreClick");
+      // console.log("OnMenuMoreClick");
+      wx.navigateTo({
+        url: "/pages/menu-detail/menu-detail",
+      })
     }
 
   },

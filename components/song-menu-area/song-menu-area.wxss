@@ -6,6 +6,7 @@
 }
 
 .menu-item{
+  width: 200rpx;
   display: inline-block;
   margin-left: 20rpx;
   /* 顶部对齐 -> 部分机型会显示有问题需要该属性解决这个bug*/
