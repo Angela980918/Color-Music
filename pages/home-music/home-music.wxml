@@ -42,5 +42,20 @@
 </view> -->
 
 <!-- 4.热门歌单/推荐歌单 -->
-<song-menu-area menuTitle="热门歌单" wx:if="{{ hotSongMenus.length > 0 }}" songMenuList="{{ hotSongMenus }}"/>
-<song-menu-area menuTitle="推荐歌单" wx:if="{{ recSongMenus.length > 0 }}" songMenuList="{{ recSongMenus }}"/>
+<!-- <song-menu-area menuTitle="热门歌单" wx:if="{{ hotSongMenus.length > 0 }}" songMenuList="{{ hotSongMenus }}"/>
+<song-menu-area menuTitle="推荐歌单" wx:if="{{ recSongMenus.length > 0 }}" songMenuList="{{ recSongMenus }}"/> -->
+
+<!-- 5.巅峰榜 -->
+<view class="ranking">
+  <area-header
+    title="巅峰榜"
+    showRight="{{ false }}"
+    bind:rightclick="onRankingClick"
+  />
+
+  <view class="ranking-list">
+    <block wx:for="{{ rankingInfos }}" wx:key="id">
+      <rank-item rankItem="{{ item }}" />
+    </block>
+  </view>
+</view>

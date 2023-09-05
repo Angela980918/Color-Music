@@ -7,6 +7,7 @@ import {
 import { queryRect } from "../../utils/query-rect";
 import { throttle } from "../../utils/throttle";
 import rankingStore from "../../store/rankingStore";
+import peakStore from "../../store/peakStore";
 // 防抖节流
 const queryRectThrottle = throttle(queryRect);
 
@@ -23,6 +24,9 @@ Page({
     // 歌单
     hotSongMenus: [], // 热门歌单列表
     recSongMenus: [], // 推荐歌单列表
+
+    // 巅峰榜数据(包括原创榜、新歌榜、飙升榜)
+    rankingInfos: {},
   },
 
   // 搜索框事件监听
@@ -86,6 +90,56 @@ Page({
   },
 
   /**
+   * 从store中获取数据
+   */
+  handlerecommendSongList(value) {
+    // console.log("value", value);
+    if (!value) return;
+    this.setData({
+      recommendSongList: value.slice(0, 6),
+    });
+  },
+
+  // handleNewRanking(value) {
+  //   // console.log("新歌榜", value);
+  //   // 解构rankingInfos，追加newRanking
+  //   const newRankingInfos = { ...this.data.rankingInfos, newRanking: value };
+  //   this.setData({
+  //     rankingInfos: newRankingInfos,
+  //   });
+  // },
+
+  // handleOriginRanking(value) {
+  //   // console.log("原创榜", value);
+  //   // 解构rankingInfos，追加originRanking
+  //   const newRankingInfos = { ...this.data.rankingInfos, originRanking: value };
+  //   this.setData({
+  //     rankingInfos: newRankingInfos,
+  //   });
+  // },
+
+  // handleUpRanking(value) {
+  //   // console.log("飙升榜", value);
+  //   // 解构rankingInfos，追加originRanking
+  //   const newRankingInfos = { ...this.data.rankingInfos, upRanking: value };
+  //   this.setData({
+  //     rankingInfos: newRankingInfos,
+  //   });
+  // },
+
+  /**
+   * 榜单数据回调函数 (注：在回调函数中返回回调函数体，这样就可以在回调函数自带参数的基础上增添自己需要的参数)
+   */
+  getRankingHandle(ranking) {
+    return (value) => {
+      const newRankingInfos = { ...this.data.rankingInfos, [ranking]: value };
+      this.setData({
+        rankingInfos: newRankingInfos,
+      });
+    };
+  },
+
+  /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
@@ -95,14 +149,14 @@ Page({
     // this.fetchMusicMenuDetailData();
 
     // Store发起数据请求
-    rankingStore.onState("rankingList", (value) => {
-      // 监听Store中的rankingList
-      // console.log("rankingList", value);
-      this.setData({
-        recommendSongList: value.slice(0, 6),
-      });
-    });
+    rankingStore.onState("rankingList", this.handlerecommendSongList);
     rankingStore.dispatch("fetchRecommendMusicAction");
+    // console.log("rankingStore", rankingStore);
+
+    peakStore.onState("newRanking", this.getRankingHandle("newRanking"));
+    peakStore.onState("originRanking", this.getRankingHandle("originRanking"));
+    peakStore.onState("upRanking", this.getRankingHandle("upRanking"));
+    peakStore.dispatch("fetchPeakRankDataAction");
   },
 
   /**
@@ -123,7 +177,10 @@ Page({
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload() {},
+  onUnload() {
+    console.log("onUnload");
+    rankingStore.offState("rankingList", this.recommendSongList);
+  },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
