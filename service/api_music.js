@@ -45,3 +45,13 @@ export function getMusicMenu(cat = "全部", limit = 6, offset = 0) {
     },
   });
 }
+
+/**
+ * 获取全部歌单列表
+ * @returns 
+ */
+export function getMusicMenuTags(){
+  return MusicRequest.get({
+    url: "/playlist/hot",
+  });
+}
