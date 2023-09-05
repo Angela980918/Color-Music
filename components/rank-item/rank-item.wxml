@@ -1,0 +1,30 @@
+<!--components/rank-item/rank-item.wxml-->
+<wxs src="/utils/format.wxs" module="format"></wxs>
+
+<view class="rank-item">
+  <!-- 左边信息 -->
+  <view class="left">
+    <view class="rank-name">{{ rankItem.name }}</view>
+    <view class="music-list">
+      <!-- 只获取每个榜单中的前三条歌曲信息 -->
+      <block wx:for="{{ 3 }}" wx:key="*this" wx:for-item="musicIndex">
+        <view class="musicInfo">
+          <text>{{ musicIndex + 1 }}. </text>
+          <text>{{ rankItem.tracks[musicIndex].name }}</text>
+          <text class="singer"> - {{ rankItem.tracks[musicIndex].ar[0].name }}</text>
+        </view>
+      </block>
+    </view>
+  </view>
+
+  <!-- 右边图片 -->
+  <view class="right">
+    <image
+      class="img"
+      src="{{ rankItem.coverImgUrl }}"
+      mode="widthFix"
+    >
+    </image>
+    <view class="count"> {{ format.formatPlayCount(rankItem.playCount) }}</view>
+  </view>
+</view>

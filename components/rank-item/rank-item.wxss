@@ -1,0 +1,61 @@
+/* components/rank-item/rank-item.wxss */
+.rank-item{
+  display: flex;
+  justify-content: space-between;
+  background-color: #eee;
+  border-radius: 12rpx;
+  overflow: hidden;
+  margin-top: 20rpx;
+}
+
+.left{
+  padding: 24rpx;
+  overflow: hidden;
+}
+
+.left .rank-name{
+  font-size: 34rpx;
+  font-weight: 700;
+}
+
+.music-list{
+  display: grid;
+  /* margin-top: 10rpx; */
+  font-size: 24rpx;
+}
+
+.musicInfo{
+  color: #333;
+  margin-top: 6rpx;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.musicInfo .singer{
+  color: #999;
+}
+
+
+.right{
+  display: flex;
+  position: relative;
+
+}
+
+.right .img{
+  width: 220rpx;
+  height: 220rpx;
+  background-size: cover;
+}
+
+.right .count{
+  position: absolute;
+  right: 2rpx;
+  bottom: 2rpx;
+  color: #fff;
+  font-size: 22rpx;
+  border-radius: 12rpx;
+  padding: 6rpx 10rpx;
+  background: rgba(0,0,0,.5);
+}
