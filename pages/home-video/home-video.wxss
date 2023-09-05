@@ -1,10 +1,15 @@
 /* pages/home-video/home-video.wxss */
+page{
+  box-sizing: border-box;
+  padding: 0 20rpx;
+}
+
 .home-video{
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 
 .home-video .item{
-  width: 48%;
+  width: 49%;
 }
