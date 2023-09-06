@@ -1,7 +1,7 @@
 <!--components/rank-item/rank-item.wxml-->
 <wxs src="/utils/format.wxs" module="format"></wxs>
 
-<view class="rank-item">
+<view class="rank-item" bindtap="onRankItemClick">
   <!-- 左边信息 -->
   <view class="left">
     <view class="rank-name">{{ rankItem.name }}</view>
@@ -19,11 +19,7 @@
 
   <!-- 右边图片 -->
   <view class="right">
-    <image
-      class="img"
-      src="{{ rankItem.coverImgUrl }}"
-      mode="widthFix"
-    >
+    <image class="img" src="{{ rankItem.coverImgUrl }}" mode="widthFix">
     </image>
     <view class="count"> {{ format.formatPlayCount(rankItem.playCount) }}</view>
   </view>
