@@ -2,7 +2,7 @@
 <!-- 引入wxs工具模块 module取模块名称 -->
 <wxs module="format" src="../../utils/format.wxs" />
 
-<view class="menu-item">
+<view class="menu-item" bindtap="onMenuItemClick">
   <view class="pic">
     <image class="img" src="{{ menuItem.coverImgUrl }}" mode="widthFix" />
     <view class="count">{{ format.formatPlayCount(menuItem.playCount) }}</view>
