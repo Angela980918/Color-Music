@@ -7,7 +7,7 @@ import {
 import { queryRect } from "../../utils/query-rect";
 import { throttle } from "../../utils/throttle";
 import rankingStore from "../../store/rankingStore";
-import peakStore from "../../store/peakStore";
+import peakStore, { rankingsMap } from "../../store/peakStore";
 // 防抖节流
 const queryRectThrottle = throttle(queryRect);
 
@@ -85,7 +85,7 @@ Page({
   onRecommendClick() {
     console.log("onRecommendClick");
     wx.navigateTo({
-      url: "/pages/songs-detail/songs-detail",
+      url: `/pages/songs-detail/songs-detail?type=recommend`,
     });
   },
 
@@ -94,9 +94,9 @@ Page({
    */
   handlerecommendSongList(value) {
     // console.log("value", value);
-    if (!value) return;
+    if (!value.tracks) return;
     this.setData({
-      recommendSongList: value.slice(0, 6),
+      recommendSongList: value.tracks.slice(0, 6),
     });
   },
 
@@ -149,14 +149,21 @@ Page({
     // this.fetchMusicMenuDetailData();
 
     // Store发起数据请求
-    rankingStore.onState("rankingList", this.handlerecommendSongList);
+    rankingStore.onState("recommendSongInfo", this.handlerecommendSongList);
     rankingStore.dispatch("fetchRecommendMusicAction");
     // console.log("rankingStore", rankingStore);
 
-    peakStore.onState("newRanking", this.getRankingHandle("newRanking"));
-    peakStore.onState("originRanking", this.getRankingHandle("originRanking"));
-    peakStore.onState("upRanking", this.getRankingHandle("upRanking"));
     peakStore.dispatch("fetchPeakRankDataAction");
+
+    // 方式一:for循环遍历
+    for (const key in rankingsMap) {
+      peakStore.onState(key, this.getRankingHandle(key));
+    }
+
+    // 方式二:普通
+    // peakStore.onState("newRanking", this.getRankingHandle("newRanking"));
+    // peakStore.onState("originRanking", this.getRankingHandle("originRanking"));
+    // peakStore.onState("upRanking", this.getRankingHandle("upRanking"));
   },
 
   /**
@@ -178,8 +185,8 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload() {
-    console.log("onUnload");
-    rankingStore.offState("rankingList", this.recommendSongList);
+    rankingStore.offState("recommendSongInfo", this.recommendSongList);
+    // peakStore.offState("rankingList", this.recommendSongList);
   },
 
   /**

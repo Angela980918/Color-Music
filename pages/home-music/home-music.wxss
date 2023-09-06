@@ -2,6 +2,7 @@
 
 page{
   padding:0 20rpx; 
+  box-sizing: border-box;
   --search-padding: 10px 0;
 }
 
