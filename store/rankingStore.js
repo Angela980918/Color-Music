@@ -3,14 +3,14 @@ import { getMusicMenuDetail } from "../service/api_music";
 
 const rankingStore = new HYEventStore({
   state: {
-    rankingList: [],
+    recommendSongInfo: [],
   },
 
   actions: {
     fetchRecommendMusicAction(ctx) {
       getMusicMenuDetail(3778678).then((res) => {
         console.log("fetchRecommendMusicAction", res);
-        ctx.rankingList = res.playlist.tracks
+        ctx.recommendSongInfo = res.playlist
       });
     },
   },
