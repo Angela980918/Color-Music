@@ -1,1 +1,11 @@
 /* pages/songs-detail/songs-detail.wxss */
+.header{
+  width: 100%;
+  height: 200rpx;
+  background-color: blue;
+}
+
+.song-list{
+  padding: 0 20rpx;
+  box-sizing: border-box;
+}

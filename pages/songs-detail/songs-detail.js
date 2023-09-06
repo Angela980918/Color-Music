@@ -1,11 +1,15 @@
 // pages/songs-detail/songs-detail.js
 import rankingStore from "../../store/rankingStore";
+import peakStore from "../../store/peakStore";
 
 Page({
   /**
    * 页面的初始数据
    */
   data: {
+    type: "ranking", // 数据类型,默认为榜单数据
+    key: "newRanking", // 默认榜单类型为新歌榜
+    id: "",
     songsList: [], // 歌曲列表
   },
 
@@ -13,9 +17,14 @@ Page({
    *  监听数据变化 => 保存至songsList
    * @param {type} value
    */
-  handleRecommendSongList(value) {
+  handleSongList(value) {
+    // console.log(value);
     this.setData({
       songsList: value,
+    });
+    // 设置导航栏标题
+    wx.setNavigationBarTitle({
+      title: value.name,
     });
   },
 
@@ -23,7 +32,26 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    rankingStore.onState("rankingList", this.handleRecommendSongList);
+    // 1.确定获取数据类型
+    // type: ranking ==> 榜单数据
+    // type: recommend ==> 推荐歌单
+    const type = options.type;
+    this.data.type = type;
+
+    // 判断是否是为榜单
+    if (type === "ranking") {
+      // 获取榜单类型
+      const key = options.key;
+      this.data.key = key;
+      peakStore.onState(key, this.handleSongList);
+    } else if (type === "recommend") {
+      // 否则为推荐歌单
+      // console.log("recommend");
+      rankingStore.onState("recommendSongInfo", this.handleSongList);
+    } else if (type === "menu") {
+      // console.log(options.id);
+      this.data.id = options.id;
+    }
   },
 
   /**
@@ -45,7 +73,11 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload() {
-    rankingStore.offState("rankingList", this.handleRecommendSongList);
+    if (this.data.type === "ranking") {
+      peakStore.offState(this.data.key, this.handleSongList);
+    } else {
+      rankingStore.offState("recommendSongInfo", this.handleSongList);
+    }
   },
 
   /**

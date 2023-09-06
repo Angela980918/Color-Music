@@ -1,2 +1,8 @@
 <!--pages/songs-detail/songs-detail.wxml-->
-<text>pages/songs-detail/songs-detail.wxml</text>
+<view class="header"></view>
+
+<view class="song-list">
+  <block wx:for="{{ songsList.tracks }}" wx:key="id">
+    <song-item-v2 class="song-item" songItem="{{ item }}" index="{{ index + 1 }}" />
+  </block>
+</view>
