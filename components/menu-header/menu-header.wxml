@@ -1,0 +1,40 @@
+<!--components/menu-header/menu-header.wxml-->
+<wxs src="/utils/format.wxs" module="format"></wxs>
+
+<!-- 背景图模糊化 -->
+<view class="content">
+  <image class="bg-image" src="{{ songItem.coverImgUrl }}" mode="aspectFill">
+  </image>
+  <view class="bg-cover"></view>
+
+  <!-- 内容部分 -->
+  <view class="album">
+    <image class="image" src="{{ songItem.coverImgUrl }}"></image>
+    <view class="info">
+      <view class="title">{{ songItem.name }}</view>
+      <view class="anthor">
+        <image
+          class="avatar"
+          src="{{ songItem.creator.avatarUrl }}"
+          mode="aspectFit|aspectFill|widthFix"
+        >
+        </image>
+        <text class="nickname">{{ songItem.creator.nickname }}</text>
+      </view>
+      <view class="desc">简介: {{ songItem.description }}</view>
+    </view>
+  </view>
+
+  <view class="operation">
+    <view class="favor item">
+      <van-icon class="icon" name="like-o" size="38rpx" />
+      <text class="text">{{
+        format.formatPlayCount(songItem.subscribedCount)
+      }}</text>
+    </view>
+    <view class="share item">
+      <van-icon class="icon" name="share-o" size="38rpx" />
+      <text class="text">分享</text>
+    </view>
+  </view>
+</view>
