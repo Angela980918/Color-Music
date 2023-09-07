@@ -10,7 +10,8 @@
     "pages/video-detail/video-detail",
     "pages/search-detail/search-detail",
     "pages/songs-detail/songs-detail",
-    "pages/menu-detail/menu-detail"
+    "pages/menu-detail/menu-detail",
+    "pages/music-player/music-player"
   ],
   "window": {
     "backgroundTextStyle": "light",
