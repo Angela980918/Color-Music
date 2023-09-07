@@ -23,5 +23,16 @@ Component({
   /**
    * 组件的方法列表
    */
-  methods: {},
+  methods: {
+    onSongItemClick() {
+      const id = this.properties.songItem.id;
+      // console.log("id", id);
+            /**
+       *  跳转至歌曲详情页
+       */
+      wx.navigateTo({
+        url: `/pages/music-player/music-player?id=${id}`,
+      });
+    },
+  },
 });
