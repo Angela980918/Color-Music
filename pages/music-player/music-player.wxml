@@ -1,0 +1,2 @@
+<!--pages/music-player/music-player.wxml-->
+<text>id:{{ id }}</text>
