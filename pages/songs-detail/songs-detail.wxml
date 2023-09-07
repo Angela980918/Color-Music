@@ -1,8 +1,21 @@
 <!--pages/songs-detail/songs-detail.wxml-->
-<view class="header"></view>
+<!-- 歌单头部 -->
+<view class="header">
+  <menu-header
+    songItem="{{ songsList }}"
+    backgroundImageUrl="{{ songsList.coverImgUrl }}"
+  />
+</view>
 
+<!-- 歌单列表 -->
 <view class="song-list">
-  <block wx:for="{{ songsList.tracks }}" wx:key="id">
-    <song-item-v2 class="song-item" songItem="{{ item }}" index="{{ index + 1 }}" />
-  </block>
+  <scroll-view class="song-list-scroll" scroll-y="true">
+    <block wx:for="{{ songsList.tracks }}" wx:key="id">
+      <song-item-v2
+        class="song-item"
+        songItem="{{ item }}"
+        index="{{ index + 1 }}"
+      />
+    </block>
+  </scroll-view>
 </view>

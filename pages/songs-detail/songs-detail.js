@@ -1,6 +1,7 @@
 // pages/songs-detail/songs-detail.js
 import rankingStore from "../../store/rankingStore";
 import peakStore from "../../store/peakStore";
+import { getMusicMenuDetail } from "../../service/api_music";
 
 Page({
   /**
@@ -29,6 +30,15 @@ Page({
   },
 
   /**
+   * 根据歌单ID获取歌单详情数据
+   */
+  async fetchMenuDetailData() {
+    const res = await getMusicMenuDetail(this.data.id);
+    // console.log("res", res);
+    this.handleSongList(res.playlist);
+  },
+
+  /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
@@ -50,7 +60,11 @@ Page({
       rankingStore.onState("recommendSongInfo", this.handleSongList);
     } else if (type === "menu") {
       // console.log(options.id);
-      this.data.id = options.id;
+      const id = options.id;
+      this.data.id = id;
+      // console.log("id", id);
+      // 网络请求
+      this.fetchMenuDetailData();
     }
   },
 
