@@ -15,3 +15,17 @@ export function getSongDetail(ids) {
     },
   });
 }
+
+/**
+ * 根据歌曲id获取歌词信息
+ * @param {*} id
+ * @returns
+ */
+export function getSongLyric(id) {
+  return MusicRequest.get({
+    url: "/lyric",
+    data: {
+      id,
+    },
+  });
+}
