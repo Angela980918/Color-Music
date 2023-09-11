@@ -1,2 +1,17 @@
 <!--pages/music-player/music-player.wxml-->
-<text>id:{{ id }}</text>
+<!-- 背景 -->
+<image
+  class="bg-image"
+  mode="aspectFill"
+  src="{{ currentSong.al.picUrl }}"
+></image>
+<view class="bg-cover"></view>
+
+<!-- 导航栏 占据位置 -->
+<nav-bar bind:leftclick="onBackTap">
+  <view slot="center" class="tab">
+    <view class="{{ currentPage === 0 ? 'active' : '' }}">歌曲</view>
+    <view class="divider">|</view>
+    <view class="{{ currentPage === 1 ? 'active' : '' }}">歌词</view>
+  </view>
+</nav-bar>

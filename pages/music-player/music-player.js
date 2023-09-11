@@ -1,5 +1,6 @@
 // pages/music-player/music-player.js
-import { getSongDetail } from "../../service/api_player";
+import { getSongDetail, getSongLyric } from "../../service/api_player";
+const app = getApp();
 Page({
   /**
    * 页面的初始数据
@@ -7,6 +8,9 @@ Page({
   data: {
     id: 0, // 歌曲id
     currentSong: {}, // 当前播放歌曲
+    songLyric: {}, //歌词
+
+    statusHeight: 20, // 状态栏高度
   },
 
   async fetchSongDetail(id) {
@@ -14,6 +18,14 @@ Page({
     console.log("fetchSongDetail", res);
     this.setData({
       currentSong: res.songs[0],
+    });
+  },
+
+  async fetchSongLyric(id) {
+    const res = await getSongLyric(id);
+    console.log("fetchSongLyric", res);
+    this.setData({
+      songLyric: res.lrc.lyric,
     });
   },
 
@@ -26,6 +38,10 @@ Page({
     const id = options.id;
     this.setData({ id });
     this.fetchSongDetail(id);
+    this.fetchSongLyric(id);
+
+    // 设备信息
+    this.setData({ statusHeight: app.globalData.statusBarHeight });
   },
 
   /**
