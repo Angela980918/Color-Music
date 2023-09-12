@@ -1,4 +1,8 @@
 /* pages/music-player/music-player.wxss */
+page{
+  color: #f4f4f4;
+}
+
 .bg-image, .bg-cover{
   width: 100%;
   height: 100%;
@@ -26,4 +30,54 @@
 
 .tab .active {
   color: #fff;
+}
+
+/* 音乐页面 */
+.swiper .music{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+  padding: 30rpx 60rpx;
+}
+
+.music .album{
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.music .album .image {
+  width: 100%;
+  border-radius: 12rpx;
+}
+
+.music .info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.info .name{
+  font-size: 35rpx;
+  font-weight: 700;
+}
+
+.info .singer {
+  margin-top: 20rpx;
+  font-size: 26rpx;
+  color: #999;
+}
+
+.music .lyric {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.music .progress {
+  flex: 1;
 }

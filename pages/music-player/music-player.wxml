@@ -10,8 +10,50 @@
 <!-- 导航栏 占据位置 -->
 <nav-bar bind:leftclick="onBackTap">
   <view slot="center" class="tab">
-    <view class="{{ currentPage === 0 ? 'active' : '' }}">歌曲</view>
+    <view
+      class="{{ currentPage === 0 ? 'active' : '' }}"
+      data-index="{{ 0 }}"
+      bindtap="onNavItemTap"
+      >歌曲</view
+    >
     <view class="divider">|</view>
-    <view class="{{ currentPage === 1 ? 'active' : '' }}">歌词</view>
+    <view
+      class="{{ currentPage === 1 ? 'active' : '' }}"
+      data-index="{{ 1 }}"
+      bindtap="onNavItemTap"
+      >歌词</view
+    >
   </view>
 </nav-bar>
+
+<!-- 内容 -->
+<swiper
+  class="swiper"
+  style="height: {{ contentHeight }}px;"
+  bindchange="onSwiperChange"
+  current="{{ currentPage }}"
+>
+  <!-- 播放页 -->
+  <swiper-item class="music">
+    <!-- 专辑图 -->
+    <view class="album">
+      <image class="image" src="{{ currentSong.al.picUrl }}" mode="widthFix">
+      </image>
+    </view>
+
+    <!-- 歌曲信息 -->
+    <view class="info">
+      <view class="name">{{ currentSong.name }}</view>
+      <view class="singer">{{ currentSong.ar[0].name }}</view>
+    </view>
+
+    <!-- 当前歌词进度 -->
+    <view class="lyric"> 作曲：xxxx </view>
+
+    <!-- 播放器 -->
+    <view class="progress">1</view>
+  </swiper-item>
+
+  <!-- 歌词 -->
+  <swiper-item class="lyric">歌词</swiper-item>
+</swiper>

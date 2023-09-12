@@ -11,6 +11,8 @@ Page({
     songLyric: {}, //歌词
 
     statusHeight: 20, // 状态栏高度
+    contentHeight: 0, // 内容区域高度
+    currentPage: 0, // 默认选择歌曲
   },
 
   async fetchSongDetail(id) {
@@ -29,6 +31,20 @@ Page({
     });
   },
 
+  //监听页面切换
+  onSwiperChange(event) {
+    // console.log(event)
+    const currentPage = event.detail.current;
+    this.setData({ currentPage });
+  },
+
+  // 导航栏切换
+  onNavItemTap(event) {
+    // console.log("onNavItemTap", event.currentTarget.dataset.index);
+    const index = event.currentTarget.dataset.index;
+    this.setData({ currentPage: index });
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */
@@ -42,6 +58,7 @@ Page({
 
     // 设备信息
     this.setData({ statusHeight: app.globalData.statusBarHeight });
+    this.setData({ contentHeight: app.globalData.contentHeight });
   },
 
   /**
