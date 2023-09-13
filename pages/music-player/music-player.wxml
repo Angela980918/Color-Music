@@ -1,4 +1,6 @@
 <!--pages/music-player/music-player.wxml-->
+<wxs src="/utils/format.wxs" module="format"></wxs>
+
 <!-- 背景 -->
 <image
   class="bg-image"
@@ -51,7 +53,50 @@
     <view class="lyric"> 作曲：xxxx </view>
 
     <!-- 播放器 -->
-    <view class="progress">1</view>
+    <view class="progress">
+      <slider
+        class="slider"
+        block-size="{{ 12 }}"
+        bindchange="onSliderChange"
+        bindchanging="onSliderChanging"
+      />
+      <view class="time">
+        <view class="current">{{ format.formatDuration(100000) }}</view>
+        <view class="duration">{{ format.formatDuration(20000) }}</view>
+      </view>
+
+      <view class="operation">
+        <image
+          class="btn btn-mode"
+          src="/assets/images/player/play_order.png"
+          bindtap="onModeBtnTap"
+          mode="widthFix"
+        />
+        <image
+          class="btn btn-prev"
+          src="/assets/images/player/play_prev.png"
+          bindtap="onPrevBtnTap"
+          mode="widthFix"
+        />
+        <image
+          class="btn btn-play"
+          src="/assets/images/player/play_next.png"
+          bindtap="onPlayOrPauseTap"
+          mode="widthFix"
+        />
+        <image
+          class="btn btn-next"
+          src="/assets/images/player/play_next.png"
+          bindtap="onNextBtnTap"
+          mode="widthFix"
+        />
+        <image
+          class="btn btn-music"
+          src="/assets/images/player/play_music.png"
+          mode="widthFix"
+        />
+      </view>
+    </view>
   </swiper-item>
 
   <!-- 歌词 -->

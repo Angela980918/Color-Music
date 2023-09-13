@@ -1,6 +1,8 @@
 // pages/music-player/music-player.js
 import { getSongDetail, getSongLyric } from "../../service/api_player";
 const app = getApp();
+// 创建播放器
+const audioContext = wx.createInnerAudioContext();
 Page({
   /**
    * 页面的初始数据
@@ -15,6 +17,9 @@ Page({
     currentPage: 0, // 默认选择歌曲
   },
 
+  /**
+   * 获取歌曲详情
+   */
   async fetchSongDetail(id) {
     const res = await getSongDetail(id);
     console.log("fetchSongDetail", res);
@@ -23,6 +28,9 @@ Page({
     });
   },
 
+  /**
+   * 获取歌词详情
+   */
   async fetchSongLyric(id) {
     const res = await getSongLyric(id);
     console.log("fetchSongLyric", res);
@@ -55,6 +63,16 @@ Page({
     this.setData({ id });
     this.fetchSongDetail(id);
     this.fetchSongLyric(id);
+
+    // 播放音乐
+    audioContext.stop();
+    audioContext.src = `https://music.163.com/song/media/outer/url?id=${id}.mp3`;
+    audioContext.autoplay = true;
+
+    // 播放进度
+    audioContext.onTimeUpdate(() => {
+      // console.log("onTimeUpdate", audioContext.currentTime);
+    });
 
     // 设备信息
     this.setData({ statusHeight: app.globalData.statusBarHeight });

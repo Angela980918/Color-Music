@@ -79,5 +79,38 @@ page{
 }
 
 .music .progress {
+  /* background-color: aqua; */
   flex: 1;
+}
+
+.progress .slider {
+  padding: 0;
+  margin: 0 0 20rpx 12rpx;
+
+}
+
+.progress .time {
+  display: flex;
+  justify-content: space-between;
+  font-size: 24rpx;
+  margin: 15rpx 0;
+}
+
+.operation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20rpx 0 50rpx;
+}
+
+.operation .btn {
+  width: 60rpx;
+}
+
+.operation .btn-mode{
+  width: 75rpx;
+}
+
+.operation .btn-play {
+  width: 100rpx;
 }
