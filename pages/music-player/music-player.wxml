@@ -59,10 +59,11 @@
         block-size="{{ 12 }}"
         bindchange="onSliderChange"
         bindchanging="onSliderChanging"
+        value="{{ sliderValue }}"
       />
       <view class="time">
-        <view class="current">{{ format.formatDuration(100000) }}</view>
-        <view class="duration">{{ format.formatDuration(20000) }}</view>
+        <view class="current">{{ format.formatDuration(currentTime) }}</view>
+        <view class="duration">{{ format.formatDuration(durationTime) }}</view>
       </view>
 
       <view class="operation">
