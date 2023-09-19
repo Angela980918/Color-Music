@@ -81,7 +81,7 @@
         />
         <image
           class="btn btn-play"
-          src="/assets/images/player/play_next.png"
+          src="/assets/images/player/play_{{ isPlaying ? 'pause': 'resume' }}.png"
           bindtap="onPlayOrPauseTap"
           mode="widthFix"
         />
