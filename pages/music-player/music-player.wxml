@@ -50,7 +50,7 @@
     </view>
 
     <!-- 当前歌词进度 -->
-    <view class="lyric"> 作曲：xxxx </view>
+    <view class="lyric"> {{ currentLyricText }} </view>
 
     <!-- 播放器 -->
     <view class="progress">
@@ -81,7 +81,7 @@
         />
         <image
           class="btn btn-play"
-          src="/assets/images/player/play_{{ isPlaying ? 'pause': 'resume' }}.png"
+          src="/assets/images/player/play_{{ isPlaying ? 'pause' : 'resume'}}.png"
           bindtap="onPlayOrPauseTap"
           mode="widthFix"
         />
@@ -101,5 +101,11 @@
   </swiper-item>
 
   <!-- 歌词 -->
-  <swiper-item class="lyric">歌词</swiper-item>
+  <swiper-item class="lyric">
+    <scroll-view class="lyric-list" scroll-y>
+      <block wx:for="{{ songLyric }}" wx:key="index">
+        <view class="lyric-item">{{ item.text }} </view> 
+      </block>
+    </scroll-view>
+  </swiper-item>
 </swiper>
