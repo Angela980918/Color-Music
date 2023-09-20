@@ -22,6 +22,8 @@ Page({
     currentPage: 0, // 默认选择歌曲
     isSliderChanging: false, // 正在改变滑块
     isPlaying: true, // 是否正在播放
+    currentLyricText: "", // 当前歌词
+    currentLyricIndex: 0, // 当前歌词索引
   },
 
   /**
@@ -106,18 +108,13 @@ Page({
     // console.log(audioContext.currentTime);
     // 如果滑块正在滑动,则不修改播放进度
     if (!this.data.isSliderChanging) {
-      // 播放进度
-      // console.log("时间改变");
-      this.setData({
-        // 秒数==> 毫秒
-        currentTime: audioContext.currentTime * 1000,
-      });
-
-      // 滑块进度
+      // 播放进度、滑块进度
       const sliderValue =
         (this.data.currentTime / this.data.durationTime) * 100;
       this.setData({
-        sliderValue,
+        // 秒数==> 毫秒
+        currentTime: audioContext.currentTime * 1000,
+        sliderValue: sliderValue,
       });
     }
   },
@@ -156,9 +153,28 @@ Page({
     audioContext.autoplay = true;
 
     // 监听歌曲
-    const throttleUpdateProgress = throttle(this.updateProgress, 800);
+    const throttleUpdateProgress = throttle(this.updateProgress, 800, {
+      leading: false,
+      trailing: false,
+    });
     audioContext.onTimeUpdate(() => {
+      // 更新歌曲进度
       throttleUpdateProgress();
+
+      // 匹配当前歌词
+      if (!this.data.songLyric.length) return;
+      let index = this.data.songLyric.length - 1;
+      for (let i = 0; i < this.data.songLyric.length; i++) {
+        const info = this.data.songLyric[i];
+        if (info.time > audioContext.currentTime * 1000) {
+          index = i - 1;
+
+          break;
+        }
+      }
+      if (index === this.data.currentLyricIndex) return;
+      const currentLyricText = this.data.songLyric[index].text;
+      this.setData({ currentLyricText, currentLyricIndex: index });
     });
 
     audioContext.onWaiting(() => {
