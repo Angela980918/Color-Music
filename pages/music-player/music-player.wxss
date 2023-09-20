@@ -114,3 +114,28 @@ page{
 .operation .btn-play {
   width: 100rpx;
 }
+
+/* 歌词页面 */
+.lyric .lyric-list{
+  color: #aaa;
+  font-size: 28rpx;
+  text-align: center;
+  height: 100%;
+}
+
+.lyric-list .lyric-item{
+  height: 35px;
+  line-height: 35px;
+}
+
+.lyric-list .lyric-item:first-child{
+  margin-top: 100px;
+}
+
+.lyric-list .lyric-item:last-of-type{
+  margin-bottom: 100px;
+}
+
+.lyric-list ::-webkit-scrollbar{
+  display: none;
+}
