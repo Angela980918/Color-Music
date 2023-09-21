@@ -83,7 +83,6 @@ Page({
   },
   // 推荐歌曲事件监听
   onRecommendClick() {
-    console.log("onRecommendClick");
     wx.navigateTo({
       url: `/pages/songs-detail/songs-detail?type=recommend`,
     });
@@ -137,6 +136,13 @@ Page({
         rankingInfos: newRankingInfos,
       });
     };
+  },
+
+  /**
+   * 点击推荐歌曲获取歌单数据
+   */
+  onRecommendItemTap() {
+    console.log("onRecommendItemTap");
   },
 
   /**
