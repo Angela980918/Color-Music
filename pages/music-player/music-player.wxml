@@ -102,9 +102,19 @@
 
   <!-- 歌词 -->
   <swiper-item class="lyric">
-    <scroll-view class="lyric-list" scroll-y>
+    <scroll-view 
+      class="lyric-list" 
+      scroll-y
+      scroll-top="{{lyricScrollTop}}"
+      scroll-with-animation 
+    >
       <block wx:for="{{ songLyric }}" wx:key="index">
-        <view class="lyric-item">{{ item.text }} </view> 
+        <view 
+          class="lyric-item {{ index === currentLyricIndex ? 'active' : '' }}" 
+          style="padding-top: {{ index === 0 ? (contentHeight/2-80) : 0 }}px; padding-bottom: {{ index === songLyric.length - 1 ? (contentHeight/2) : 0 }}px"
+        > 
+          {{ item.text }} 
+        </view> 
       </block>
     </scroll-view>
   </swiper-item>
