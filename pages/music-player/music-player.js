@@ -24,6 +24,8 @@ Page({
     isPlaying: true, // 是否正在播放
     currentLyricText: "", // 当前歌词
     currentLyricIndex: 0, // 当前歌词索引
+
+    lyricScrollTop: 0, // 歌词滚动距离
   },
 
   /**
@@ -134,6 +136,11 @@ Page({
     }
   },
 
+  // 返回上一层
+  onBackTap() {
+    wx.navigateBack();
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */
@@ -174,7 +181,11 @@ Page({
       }
       if (index === this.data.currentLyricIndex) return;
       const currentLyricText = this.data.songLyric[index].text;
-      this.setData({ currentLyricText, currentLyricIndex: index });
+      this.setData({
+        currentLyricText,
+        currentLyricIndex: index,
+        lyricScrollTop: 35 * index,
+      });
     });
 
     audioContext.onWaiting(() => {
