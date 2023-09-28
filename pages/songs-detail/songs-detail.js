@@ -2,6 +2,7 @@
 import rankingStore from "../../store/rankingStore";
 import peakStore from "../../store/peakStore";
 import { getMusicMenuDetail } from "../../service/api_music";
+import playerStore from "../../store/playerStore";
 
 Page({
   /**
@@ -36,6 +37,13 @@ Page({
     const res = await getMusicMenuDetail(this.data.id);
     // console.log("res", res);
     this.handleSongList(res.playlist);
+  },
+
+  // 获取到完整的歌单信息
+  onSongItemTap(event) {
+    console.log("onSongItemTap");
+    playerStore.setState("playSongList", this.data.songsList.tracks);
+    playerStore.setState("playSongIndex", event.currentTarget.dataset.index);
   },
 
   /**
