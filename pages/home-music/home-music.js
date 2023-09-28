@@ -7,6 +7,7 @@ import {
 import { queryRect } from "../../utils/query-rect";
 import { throttle } from "../../utils/throttle";
 import rankingStore from "../../store/rankingStore";
+import playerStore from "../../store/playerStore";
 import peakStore, { rankingsMap } from "../../store/peakStore";
 // 防抖节流
 const queryRectThrottle = throttle(queryRect);
@@ -139,10 +140,13 @@ Page({
   },
 
   /**
-   * 点击推荐歌曲获取歌单数据
+   * 点击推荐歌曲获取当前歌单数据
    */
-  onRecommendItemTap() {
+  onRecommendItemTap(event) {
     console.log("onRecommendItemTap");
+    const index = event.currentTarget.dataset.index;
+    playerStore.setState("playSongList", this.data.recommendSongList);
+    playerStore.setState("playSongIndex", index);
   },
 
   /**
