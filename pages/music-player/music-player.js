@@ -2,6 +2,7 @@
 import { getSongDetail, getSongLyric } from "../../service/api_player";
 import { throttle } from "../../utils/throttle";
 import { parseLyric } from "../../utils/parselyric";
+import playerStore from "../../store/playerStore";
 const app = getApp();
 // 创建播放器
 const audioContext = wx.createInnerAudioContext();
@@ -26,6 +27,9 @@ Page({
     currentLyricIndex: 0, // 当前歌词索引
 
     lyricScrollTop: 0, // 歌词滚动距离
+
+    playSongList: [], // 当前播放列表
+    playSongIndex: 0, // 当前播放歌曲索引
   },
 
   /**
@@ -140,6 +144,26 @@ Page({
   onBackTap() {
     wx.navigateBack();
   },
+  // 上一首
+  onPrevBtnTap() {
+    console.log("点击了上一首");
+  },
+
+  // 下一首
+  onNextBtnTap() {
+    console.log("点击了下一首");
+  },
+
+  // ======================= store 监听事件 =======================
+  getPlayInfosHandler({ playSongList, playSongIndex }) {
+    console.log("playSongIndex", playSongIndex);
+    if (playSongList) {
+      this.setData({ playSongList });
+    }
+    if (playSongIndex !== undefined) {
+      this.setData({ playSongIndex });
+    }
+  },
 
   /**
    * 生命周期函数--监听页面加载
@@ -200,6 +224,12 @@ Page({
       audioContext.play();
     });
 
+    // 获取store的共享数据
+    playerStore.onStates(
+      ["playSongList", "playSongIndex"],
+      this.getPlayInfosHandler
+    );
+
     // 设备信息
     this.setData({
       statusHeight: app.globalData.statusBarHeight,
@@ -227,7 +257,12 @@ Page({
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload() {},
+  onUnload() {
+    playerStore.offStates(
+      ["playSongList", "playSongIndex"],
+      this.getPlayInfosHandler
+    );
+  },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
