@@ -20,10 +20,6 @@ App({
         this.globalData.screenHeight = res.screenHeight;
         this.globalData.contentHeight =
           res.screenHeight - res.statusBarHeight - 44;
-        // console.log(
-        //   res.screenHeight - res.statusBarHeight,
-        //   res.screenHeight - res.statusBarHeight - 44
-        // );
       },
     });
   },
