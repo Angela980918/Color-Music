@@ -30,6 +30,7 @@ Page({
 
     playSongList: [], // 当前播放列表
     playSongIndex: 0, // 当前播放歌曲索引
+    isFirstPlay: true, // 是否是第一次播放
   },
 
   /**
@@ -146,12 +147,49 @@ Page({
   },
   // 上一首
   onPrevBtnTap() {
-    console.log("点击了上一首");
+    // console.log("点击了上一首");
+    this.changeNewSong(false);
   },
 
   // 下一首
   onNextBtnTap() {
-    console.log("点击了下一首");
+    // console.log("点击了下一首");
+    this.changeNewSong();
+  },
+
+  // 判断点击 下一首 或者 上一首
+  changeNewSong(isNext = true) {
+    // 1.获取之前的数据
+    const length = this.data.playSongList.length;
+    let index = this.data.playSongIndex;
+
+    // 2.根据之前的数据，重新计算索引
+    index = isNext ? index + 1 : index - 1;
+    // 2.1 pageIndex不能为负数,index不能超过列表长度
+    if (index === -1) {
+      index = length - 1;
+    }
+    if (index === length) {
+      index = 0;
+    }
+
+    // 3.根据索引获取上一首歌曲
+    const newSong = this.data.playSongList[index];
+    console.log(newSong.id);
+
+    // 4.记录最新的索引
+    playerStore.setState("playSongIndex", index);
+
+    //4.1播放前将之前的数据初始化
+    this.setData({
+      currentSong: {},
+      sliderValue: 0,
+      currentTime: 0,
+      duration: 0,
+      isPlaying: true,
+    });
+    // 5.播放新歌曲
+    this.setupPlaySong(newSong.id);
   },
 
   // ======================= store 监听事件 =======================
@@ -165,16 +203,11 @@ Page({
     }
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad(options) {
-    // console.log("options", options);
+  // ======================= 播放歌曲 =======================
+  setupPlaySong(id) {
     // 1.获取歌曲id
-    const id = options.id;
-    this.setData({
-      id,
-    });
+    this.setData({ id });
+
     this.fetchSongDetail(id);
     this.fetchSongLyric(id);
 
@@ -188,42 +221,56 @@ Page({
       leading: false,
       trailing: false,
     });
-    audioContext.onTimeUpdate(() => {
-      // 更新歌曲进度
-      throttleUpdateProgress();
 
-      // 匹配当前歌词
-      if (!this.data.songLyric.length) return;
-      let index = this.data.songLyric.length - 1;
-      for (let i = 0; i < this.data.songLyric.length; i++) {
-        const info = this.data.songLyric[i];
-        if (info.time > audioContext.currentTime * 1000) {
-          index = i - 1;
+    if (this.data.isFirstPlay) {
+      this.data.isFirstPlay = false;
+      audioContext.onTimeUpdate(() => {
+        // 更新歌曲进度
+        throttleUpdateProgress();
 
-          break;
+        // 匹配当前歌词
+        if (!this.data.songLyric.length) return;
+        let index = this.data.songLyric.length - 1;
+        for (let i = 0; i < this.data.songLyric.length; i++) {
+          const info = this.data.songLyric[i];
+          if (info.time > audioContext.currentTime * 1000) {
+            index = i - 1;
+
+            break;
+          }
         }
-      }
-      if (index === this.data.currentLyricIndex) return;
-      const currentLyricText = this.data.songLyric[index].text;
-      this.setData({
-        currentLyricText,
-        currentLyricIndex: index,
-        lyricScrollTop: 35 * index,
+        if (index === this.data.currentLyricIndex) return;
+        const currentLyricText = this.data.songLyric[index].text;
+        this.setData({
+          currentLyricText,
+          currentLyricIndex: index,
+          lyricScrollTop: 35 * index,
+        });
       });
-    });
+      audioContext.onWaiting(() => {
+        // console.log("先暂停");
+        // 先暂停
+        audioContext.pause();
+      });
 
-    audioContext.onWaiting(() => {
-      // console.log("先暂停");
-      // 先暂停
-      audioContext.pause();
-    });
-
-    audioContext.onCanplay(() => {
-      // console.log("继续播放");
-      // 继续播放
-      audioContext.play();
-    });
-
+      audioContext.onCanplay(() => {
+        // console.log("继续播放");
+        // 继续播放
+        audioContext.play();
+      });
+      audioContext.onEnded(() => {
+        // 自然播放结束
+        this.changeNewSong()
+      })
+    }
+  },
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad(options) {
+    // console.log("options", options);
+    const id = options.id;
+    this.setupPlaySong(id);
     // 获取store的共享数据
     playerStore.onStates(
       ["playSongList", "playSongIndex"],
