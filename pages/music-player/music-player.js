@@ -6,6 +6,8 @@ import playerStore from "../../store/playerStore";
 const app = getApp();
 // 创建播放器
 const audioContext = wx.createInnerAudioContext();
+// 播放模式
+const modelName = ["order", "repeat", "random"]; // 列表循环，
 Page({
   /**
    * 页面的初始数据
@@ -31,6 +33,9 @@ Page({
     playSongList: [], // 当前播放列表
     playSongIndex: 0, // 当前播放歌曲索引
     isFirstPlay: true, // 是否是第一次播放
+
+    playModelIndex: 0, // 默认播放模式 0:列表循环 1:单曲循环 2:随机播放
+    playModelName: "order", // 当前播放模式 默认列表循环
   },
 
   /**
@@ -164,13 +169,22 @@ Page({
     let index = this.data.playSongIndex;
 
     // 2.根据之前的数据，重新计算索引
-    index = isNext ? index + 1 : index - 1;
-    // 2.1 pageIndex不能为负数,index不能超过列表长度
-    if (index === -1) {
-      index = length - 1;
-    }
-    if (index === length) {
-      index = 0;
+    switch (this.data.playModelIndex) {
+      case 0: // 列表循环
+        index = isNext ? index + 1 : index - 1;
+        // 2.1 pageIndex不能为负数,index不能超过列表长度
+        if (index === -1) {
+          index = length - 1;
+        }
+        if (index === length) {
+          index = 0;
+        }
+        break;
+      case 1: // 单曲循环
+        break;
+      case 2: // 随机播放
+        index = Math.floor(Math.random() * length);
+        break;
     }
 
     // 3.根据索引获取上一首歌曲
@@ -190,6 +204,20 @@ Page({
     });
     // 5.播放新歌曲
     this.setupPlaySong(newSong.id);
+  },
+
+  // 播放模式切换
+  onModeBtnTap() {
+    let modeIndex = this.data.playModelIndex;
+    modeIndex++;
+    if (modeIndex === 3) {
+      modeIndex = 0;
+    }
+    this.setData({
+      playModelIndex: modeIndex,
+      playModelName: modelName[modeIndex],
+    });
+    console.log("playModelIndex", this.data.playModelIndex);
   },
 
   // ======================= store 监听事件 =======================
@@ -212,7 +240,7 @@ Page({
     this.fetchSongLyric(id);
 
     // 播放音乐
-    // audioContext.stop();
+    audioContext.stop();
     audioContext.src = `https://music.163.com/song/media/outer/url?id=${id}.mp3`;
     audioContext.autoplay = true;
 
@@ -259,9 +287,9 @@ Page({
         audioContext.play();
       });
       audioContext.onEnded(() => {
-        // 自然播放结束
-        this.changeNewSong()
-      })
+        // 自然播放结束后播放下一首
+        this.changeNewSong();
+      });
     }
   },
   /**
