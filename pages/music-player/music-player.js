@@ -15,7 +15,7 @@ Page({
   data: {
     id: 0, // 歌曲id
     currentSong: {}, // 当前播放歌曲
-    songLyric: {}, //歌词
+    songLyric: [], //歌词
     currentTime: 0, // 当前播放时间
     durationTime: 0, // 歌曲的总时长
     sliderValue: 0, // 播放进度(滑块进度条)
@@ -96,24 +96,26 @@ Page({
     this.setData({
       currentTime: currentTime,
       sliderValue: value,
+      isPlaying: true,
     });
 
     // 设置isSliderChanging
     this.setData({ isSliderChanging: false });
   },
 
-  // 滑动滑块
-  onSliderChanging(event) {
+  // 滑动滑块--节流操作
+  onSliderChanging: throttle(function (event) {
     // 1.获取滑动滑块的位置
     const value = event.detail.value;
+    // console.log(value);
 
     // 2.设置滑块进度
     const currentTime = (value / 100) * this.data.durationTime;
     this.setData({ currentTime });
 
     // 3.当前正在滑动
-    this.setData({ isSliderChanging: true });
-  },
+    this.setData({ isSliderChanging: true, isPlaying: true });
+  }, 100),
 
   // 节流限制
   updateProgress() {
@@ -221,13 +223,46 @@ Page({
   },
 
   // ======================= store 监听事件 =======================
-  getPlayInfosHandler({ playSongList, playSongIndex }) {
-    console.log("playSongIndex", playSongIndex);
+  getSongInfosHandler({ playSongList, playSongIndex }) {
     if (playSongList) {
       this.setData({ playSongList });
     }
     if (playSongIndex !== undefined) {
       this.setData({ playSongIndex });
+    }
+  },
+  getPlayInfosHandler({
+    id,
+    currentSong,
+    currentTime,
+    durationTime,
+    songLyric,
+    currentLyricText,
+    currentLyricIndex,
+  }) {
+    if (id !== undefined) {
+      this.setData({ id });
+    }
+    if (currentSong) {
+      this.setData({ currentSong });
+    }
+    if (currentTime !== undefined) {
+      this.setData({ currentTime });
+    }
+    if (durationTime !== undefined) {
+      this.setData({ durationTime });
+    }
+    if (songLyric) {
+      this.setData({ songLyric });
+    }
+    if (currentLyricText) {
+      this.setData({ currentLyricText });
+    }
+    if (currentLyricIndex !== undefined) {
+      this.setData({
+        currentLyricIndex,
+        lyricScrollTop: 35 * currentLyricIndex, // 歌词滚动距离
+      });
     }
   },
 
@@ -298,10 +333,24 @@ Page({
   onLoad(options) {
     // console.log("options", options);
     const id = options.id;
-    this.setupPlaySong(id);
+
+    // this.setupPlaySong(id);
+    playerStore.dispatch("playMusicWithSongIdAction", id);
     // 获取store的共享数据
     playerStore.onStates(
       ["playSongList", "playSongIndex"],
+      this.getSongInfosHandler
+    );
+    playerStore.onStates(
+      [
+        "id",
+        "currentSong",
+        "currentTime",
+        "durationTime",
+        "songLyric",
+        "currentLyricText",
+        "currentLyricIndex",
+      ],
       this.getPlayInfosHandler
     );
 
@@ -335,6 +384,18 @@ Page({
   onUnload() {
     playerStore.offStates(
       ["playSongList", "playSongIndex"],
+      this.getSongInfosHandler
+    );
+    playerStore.offStates(
+      [
+        "id",
+        "currentSong",
+        "currentTime",
+        "durationTime",
+        "songLyric",
+        "currentLyricText",
+        "currentLyricIndex",
+      ],
       this.getPlayInfosHandler
     );
   },
