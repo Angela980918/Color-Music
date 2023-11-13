@@ -7,12 +7,29 @@
   "pages": [
     "pages/home-music/home-music",
     "pages/home-video/home-video",
-    "pages/video-detail/video-detail",
     "pages/search-detail/search-detail",
     "pages/songs-detail/songs-detail",
-    "pages/menu-detail/menu-detail",
-    "pages/music-player/music-player"
+    "pages/menu-detail/menu-detail"
   ],
+  "subPackages": [{
+      "root": "packageVideo",
+      "pages": [
+        "pages/video-detail/video-detail"
+      ]
+    },
+    {
+      "root": "packagePlayer",
+      "pages": [
+        "pages/music-player/music-player"
+      ]
+    }
+  ],
+  "preloadRule": {
+    "pages/home-music/home-music": {
+      "network": "all",
+      "packages": ["packagePlayer"]
+    }
+  },
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
@@ -21,8 +38,7 @@
   },
   "sitemapLocation": "sitemap.json",
   "tabBar": {
-    "list": [
-      {
+    "list": [{
         "pagePath": "pages/home-music/home-music",
         "text": "音乐",
         "iconPath": "assets/images/tabbar/music_normal.png",
