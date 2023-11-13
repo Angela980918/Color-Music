@@ -37,3 +37,71 @@ page{
 .list .item:last-of-type{
   margin-right: 20rpx;
 }
+
+/* 播放栏 */
+.play-bar{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 0 10px;
+  height: 44px;
+  background-color: #fafafa;
+  box-shadow: 0 0 10px rgba(100, 100, 100, .3);
+}
+
+.play-bar .left{
+  display: flex;
+  align-items: center;
+}
+
+.play-bar .left .album{
+  position: relative;
+  top: -8px;
+
+  width: 50px;
+  height: 50  px;
+  border-radius: 50%;
+}
+
+.left .name{
+  font-size: 24rpx;
+}
+.play-bar .left image{
+
+  position: relative;
+  top: -8px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+.play-bar .right{
+  display: flex;
+  align-items: center;}
+.right image{
+  width: 20px;
+  height: 20px;
+  margin: 0 3px;
+}
+.right image:nth-child(2){
+  width: 25px;
+  height: 25px;
+}
+
+/* css3动画 */
+@keyframes albumRotate{
+  from{
+    transform: rotate(0deg);
+  }
+  to{
+    transform: rotate(360deg);
+  }
+}
+.album-animation{
+  /* 线性动画 循环执行 */
+  animation: albumRotate 16s linear infinite;
+}

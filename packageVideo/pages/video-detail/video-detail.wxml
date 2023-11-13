@@ -1,0 +1,29 @@
+<!--pages/video-detail/video-detail.wxml-->
+<!-- 视频播放组件 -->
+<video
+  class="video"
+  autoplay
+  src="{{ mvUrl }}"
+  danmu-list="{{ danmuList }}"
+  referrer-policy="origin"
+></video>
+
+<scroll-view class="content" scroll-y>
+  <!-- 视频详情 -->
+  <video-detail-info detailInfo="{{ mvInfo }}" />
+
+  <!-- 视频相关推荐 -->
+  <view class="video-list">
+    <!-- 标题 -->
+    <view class="title" wx:if="{{ mvRelated.length !== 0 }}">推荐视频</view>
+
+    <!-- 视频列表 -->
+    <view wx:for="{{ mvRelated }}" wx:key="id">
+      <video-related-item
+        relatedData="{{ item }}"
+        data-item="{{ item }}"
+        bindtap="handleRelatedItemClick"
+      />
+    </view>
+  </view>
+</scroll-view>

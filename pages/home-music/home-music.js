@@ -28,6 +28,10 @@ Page({
 
     // 巅峰榜数据(包括原创榜、新歌榜、飙升榜)
     rankingInfos: {},
+
+    currentSong: {}, // 当前播放歌曲
+    isPlaying: false, // 是否正在播放
+    animationState: "running", // 动画状态
   },
 
   // 搜索框事件监听
@@ -44,17 +48,6 @@ Page({
       bannerImg: res.banners,
     });
   },
-
-  // 获取歌单详情数据
-  // async fetchMusicMenuDetailData() {
-  //   const res = await getMusicMenuDetail(3778678);
-  //   console.log(res);
-  //   const playList = res.playlist;
-  //   const TempSongList = playList.tracks.slice(0, 6);
-  //   this.setData({
-  //     recommendSongList: TempSongList,
-  //   });
-  // },
 
   // 获取热门歌单列表数据--"全部"
   async fetchHotSongMenuListData() {
@@ -100,32 +93,19 @@ Page({
     });
   },
 
-  // handleNewRanking(value) {
-  //   // console.log("新歌榜", value);
-  //   // 解构rankingInfos，追加newRanking
-  //   const newRankingInfos = { ...this.data.rankingInfos, newRanking: value };
-  //   this.setData({
-  //     rankingInfos: newRankingInfos,
-  //   });
-  // },
-
-  // handleOriginRanking(value) {
-  //   // console.log("原创榜", value);
-  //   // 解构rankingInfos，追加originRanking
-  //   const newRankingInfos = { ...this.data.rankingInfos, originRanking: value };
-  //   this.setData({
-  //     rankingInfos: newRankingInfos,
-  //   });
-  // },
-
-  // handleUpRanking(value) {
-  //   // console.log("飙升榜", value);
-  //   // 解构rankingInfos，追加originRanking
-  //   const newRankingInfos = { ...this.data.rankingInfos, upRanking: value };
-  //   this.setData({
-  //     rankingInfos: newRankingInfos,
-  //   });
-  // },
+  handlerCurrentSong({ currentSong, isPlaying }) {
+    if (currentSong) {
+      this.setData({
+        currentSong,
+      });
+    }
+    if (isPlaying !== undefined) {
+      this.setData({
+        isPlaying,
+        animationState: isPlaying ? "running" : "paused",
+      });
+    }
+  },
 
   /**
    * 榜单数据回调函数 (注：在回调函数中返回回调函数体，这样就可以在回调函数自带参数的基础上增添自己需要的参数)
@@ -143,10 +123,26 @@ Page({
    * 点击推荐歌曲获取当前歌单数据
    */
   onRecommendItemTap(event) {
-    console.log("onRecommendItemTap");
     const index = event.currentTarget.dataset.index;
     playerStore.setState("playSongList", this.data.recommendSongList);
     playerStore.setState("playSongIndex", index);
+  },
+
+  /**
+   * 播放栏点击事件
+   */
+  handleBarClick() {
+    const id = this.data.currentSong.id;
+    wx.navigateTo({
+      url: `/packagePlayer/pages/music-player/music-player`,
+    });
+  },
+
+  /**
+   * 播放栏暂停或播放
+   */
+  handleBarPlayClick() {
+    playerStore.dispatch("changeMusicStatusAction");
   },
 
   /**
@@ -161,9 +157,10 @@ Page({
     // Store发起数据请求
     rankingStore.onState("recommendSongInfo", this.handlerecommendSongList);
     rankingStore.dispatch("fetchRecommendMusicAction");
-    // console.log("rankingStore", rankingStore);
-
     peakStore.dispatch("fetchPeakRankDataAction");
+    playerStore.onStates(["currentSong", "isPlaying"], this.handlerCurrentSong);
+
+    // playerStore.dispatch("playMusicWithSongIdAction", 1456890009);
 
     // 方式一:for循环遍历
     for (const key in rankingsMap) {
@@ -196,7 +193,7 @@ Page({
    */
   onUnload() {
     rankingStore.offState("recommendSongInfo", this.recommendSongList);
-    // peakStore.offState("rankingList", this.recommendSongList);
+    playerStore.offState(["currentSong", "isPlaying"], this.handlerCurrentSong);
   },
 
   /**

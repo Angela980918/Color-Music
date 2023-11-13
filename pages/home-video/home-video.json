@@ -1,6 +1,6 @@
 {
   "usingComponents": {
-    "video-item-v1": "../../components/video-item-v1/video-item-v1"
+    "video-item-v1": "../../../components/video-item-v1/video-item-v1"
   },
   "backgroundTextStyle": "dark",
   "enablePullDownRefresh": true,

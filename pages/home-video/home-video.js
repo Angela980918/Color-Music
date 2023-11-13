@@ -73,7 +73,7 @@ Page({
     // console.log("点击视频", id);
     // 跳转至视频详情页
     wx.navigateTo({
-      url: `/pages/video-detail/video-detail?id=${id}`,
+      url: `/packageVideo/pages/video-detail/video-detail?id=${id}`,
     })
   },
 

@@ -36,8 +36,8 @@
   <area-header title="推荐歌曲" bind:rightclick="onRecommendClick" />
   <block wx:for="{{ recommendSongList }}" wx:key="id">
     <view class="item">
-      <song-item-v1 
-        songItem="{{ item }}" 
+      <song-item-v1
+        songItem="{{ item }}"
         bindtap="onRecommendItemTap"
         data-index="{{ index }}"
       />
@@ -46,8 +46,16 @@
 </view>
 
 <!-- 4.热门歌单/推荐歌单 -->
-<song-menu-area menuTitle="热门歌单" wx:if="{{ hotSongMenus.length > 0 }}" songMenuList="{{ hotSongMenus }}"/>
-<song-menu-area menuTitle="推荐歌单" wx:if="{{ recSongMenus.length > 0 }}" songMenuList="{{ recSongMenus }}"/>
+<song-menu-area
+  menuTitle="热门歌单"
+  wx:if="{{ hotSongMenus.length > 0 }}"
+  songMenuList="{{ hotSongMenus }}"
+/>
+<song-menu-area
+  menuTitle="推荐歌单"
+  wx:if="{{ recSongMenus.length > 0 }}"
+  songMenuList="{{ recSongMenus }}"
+/>
 
 <!-- 5.巅峰榜 -->
 <view class="ranking">
@@ -61,5 +69,35 @@
     <block wx:for="{{ rankingInfos }}" wx:key="id">
       <rank-item rankItem="{{ item }}" key="{{ index }}" />
     </block>
+  </view>
+</view>
+
+<!-- 播放工具栏 -->
+<view
+  class="play-bar"
+  wx:if="{{ currentSong.name || isPlaying }}"
+  bindtap="handleBarClick"
+>
+  <!-- 左部 -->
+  <view class="left">
+    <image
+      class="album-animation"
+      src="{{ currentSong.al.picUrl }}"
+      mode="aspectFit"
+      style="animation-play-state: {{animationState}};"
+    ></image>
+    <view class="name">{{ currentSong.name }}</view>
+  </view>
+  <!-- 右部部 -->
+  <view class="right">
+    <image
+      class="icon play"
+      src="/assets/images/music/{{ isPlaying ? 'pause' : 'play' }}_icon.png"
+      catchtap="handleBarPlayClick"
+    ></image>
+    <image
+      class="icon playlist"
+      src="/assets/images/music/playlist_icon.png"
+    ></image>
   </view>
 </view>

@@ -3,7 +3,9 @@ import { parseLyric } from "../utils/parselyric";
 import { getSongLyric, getSongDetail } from "../service/api_player";
 
 // 创建播放器
-const audioContext = wx.createInnerAudioContext();
+export const audioContext = wx.createInnerAudioContext();
+// BUG 进度条改变不会播放
+// const audioContext = wx.getBackgroundAudioManager()
 
 const playerStore = new HYEventStore({
   state: {
@@ -20,15 +22,27 @@ const playerStore = new HYEventStore({
 
     currentLyricText: "", // 当前歌词
     currentLyricIndex: 0, // 当前歌词索引
+
+    isPlaying: false, // 是否正在播放
+    playModelIndex: 0, // 默认播放模式 0:列表循环 1:单曲循环 2:随机播放
   },
 
   actions: {
+    // 播放音乐
     playMusicWithSongIdAction(ctx, id) {
+      // 0、修改播放状态 & 重置
+      ctx.isPlaying = true;
+      ctx.currentSong = {};
+      ctx.songLyric = [];
+      ctx.durationTime = 0;
+      ctx.currentTime = 0;
+      ctx.currentLyricText = "";
+      ctx.currentLyricIndex = 0;
+
       ctx.id = id;
 
       // 1、请求歌曲详情
       getSongDetail(id).then((res) => {
-        console.log(res);
         ctx.currentSong = res.songs[0];
         ctx.durationTime = res.songs[0].dt;
         audioContext.title = res.songs[0].name;
@@ -49,7 +63,7 @@ const playerStore = new HYEventStore({
         ctx.isFirstPlay = false;
         audioContext.onTimeUpdate(() => {
           // 获取当前播放的时间
-          ctx.currentTime = audioContext.currentTime;
+          ctx.currentTime = audioContext.currentTime * 1000;
 
           // 匹配当前歌词
           if (!ctx.songLyric.length) return;
@@ -81,9 +95,73 @@ const playerStore = new HYEventStore({
           // 如果是单曲循环则不进行切换歌曲
           if (audioContext.loop) return;
           // 自然播放结束后播放下一首
-          // this.changeNewSong();
+          this.dispatch("changeNewSongAction");
         });
       }
+    },
+
+    // 播放状态
+    changeMusicStatusAction(ctx) {
+      if (!audioContext.paused) {
+        audioContext.pause();
+        ctx.isPlaying = false;
+      } else {
+        audioContext.play();
+        ctx.isPlaying = true;
+      }
+    },
+
+    // 播放模式
+    changeMusicModelAction(ctx) {
+      let modeIndex = ctx.playModelIndex;
+      modeIndex++;
+      if (modeIndex === 3) {
+        modeIndex = 0;
+      }
+
+      // 设置单曲循环模式
+      if (modeIndex === 1) {
+        audioContext.loop = true;
+      } else {
+        audioContext.loop = false;
+      }
+
+      // 保存当前模式
+      ctx.playModelIndex = modeIndex;
+    },
+
+    // 切换歌曲
+    changeNewSongAction(ctx, isNext = true) {
+      const length = ctx.playSongList.length;
+      let index = ctx.playSongIndex;
+
+      // 2.根据之前的数据，重新计算索引
+      switch (ctx.playModelIndex) {
+        case 0: // 列表循环
+          index = isNext ? index + 1 : index - 1;
+          // 2.1 pageIndex不能为负数,index不能超过列表长度
+          if (index === -1) {
+            index = length - 1;
+          }
+          if (index === length) {
+            index = 0;
+          }
+          break;
+        case 1: // 单曲循环
+          break;
+        case 2: // 随机播放
+          index = Math.floor(Math.random() * length);
+          break;
+      }
+
+      // 3.根据索引获取上一首歌曲
+      const newSong = ctx.playSongList[index];
+
+      // 4.播放新歌曲
+      this.dispatch("playMusicWithSongIdAction", newSong.id);
+
+      // 5.记录最新的索引
+      this.setState("playSongIndex", index);
     },
   },
 });
