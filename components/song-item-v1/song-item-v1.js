@@ -27,7 +27,7 @@ Component({
        *  跳转至歌曲详情页
        */
       wx.navigateTo({
-        url: `/pages/music-player/music-player?id=${id}`,
+        url: `/packagePlayer/pages/music-player/music-player?id=${id}`,
       });
     },
   },
